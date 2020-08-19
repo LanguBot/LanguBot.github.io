@@ -1,7 +1,7 @@
 [Hux Blog](https://huangxuan.me)
 ================================
 
-> I never expected this becomes.
+>
 
 ![](http://huangxuan.me/img/blog-desktop.jpg)
 
