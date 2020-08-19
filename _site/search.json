@@ -1,6 +1,14 @@
 [
   
     {
+      "title"    : "Automated Program Repair",
+      "subtitle" : "Landscapes and Horizons",
+      "tags"     : "Deep Learning, Safety-critical System",
+      "url"      : "/2020/08/16/Automated-Program-Repair/",
+      "date"     : "2020-08-16 00:00:00 +0900"
+    } ,
+  
+    {
       "title"    : "北海道之行",
       "subtitle" : "七泊八日",
       "tags"     : "北海道, 旅行",
