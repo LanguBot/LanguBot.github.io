@@ -5,8 +5,8 @@
     <description>This is Langubot</description>
     <link>http://localhost:4000/</link>
     <atom:link href="http://localhost:4000/feed.xml" rel="self" type="application/rss+xml" />
-    <pubDate>Mon, 24 Aug 2020 16:28:54 +0900</pubDate>
-    <lastBuildDate>Mon, 24 Aug 2020 16:28:54 +0900</lastBuildDate>
+    <pubDate>Mon, 24 Aug 2020 16:57:28 +0900</pubDate>
+    <lastBuildDate>Mon, 24 Aug 2020 16:57:28 +0900</lastBuildDate>
     <generator>Jekyll v4.1.1</generator>
     
       <item>
@@ -187,10 +187,13 @@ document.onmousedown = norightclick; // for all others
 
 &lt;h2 id=&quot;旅行&quot;&gt;旅行&lt;/h2&gt;
 &lt;h3 id=&quot;便携手册&quot;&gt;便携手册&lt;/h3&gt;
-&lt;p&gt;&lt;a href=&quot;/pdf/hokkido_n.pdf&quot; target=&quot;_blank&quot;&gt;&lt;img src=&quot;/img/hokkido_www.JPG&quot; style=&quot;cursor: pointer&quot; border=&quot;0&quot; /&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;Tip: 点击图片有惊喜哦！&lt;/em&gt;
+&lt;a href=&quot;/pdf/hokkido_n.pdf&quot; target=&quot;_blank&quot;&gt;&lt;img src=&quot;/img/hokkido_www.JPG&quot; style=&quot;cursor: pointer&quot; border=&quot;0&quot; /&gt;&lt;/a&gt;&lt;/p&gt;
 
 &lt;h3 id=&quot;旅行笔记&quot;&gt;旅行笔记&lt;/h3&gt;
-&lt;p&gt;&lt;em&gt;Tip: 点击地图上方数字角标有惊喜哦！&lt;/em&gt;&lt;img src=&quot;/img/in-post/map_hokkido.png&quot; border=&quot;0&quot; usemap=&quot;#planetmap&quot; alt=&quot;Planets&quot; /&gt;&lt;/p&gt;
+&lt;p&gt;*Tip: 点击地图上方数字角标有惊喜哦(电脑效果更佳)！&lt;/p&gt;
+
+&lt;p&gt;*&lt;img src=&quot;/img/in-post/map_hokkido.png&quot; border=&quot;0&quot; usemap=&quot;#planetmap&quot; alt=&quot;Planets&quot; /&gt;&lt;/p&gt;
 &lt;map name=&quot;planetmap&quot; id=&quot;planetmap&quot;&gt;
 &lt;area shape=&quot;rect&quot; coords=&quot;45,140,130,151&quot; href=&quot;/pdf/hokkido_1.pdf&quot; target=&quot;_blank&quot; style=&quot;cursor: pointer&quot; alt=&quot;Venus&quot; /&gt;
 &lt;area shape=&quot;rect&quot; coords=&quot;102,44,261,55&quot; href=&quot;/pdf/hokkido_21.pdf&quot; target=&quot;_blank&quot; style=&quot;cursor: pointer&quot; alt=&quot;Venus1&quot; /&gt;
@@ -199,52 +202,18 @@ document.onmousedown = norightclick; // for all others
 &lt;area shape=&quot;rect&quot; coords=&quot;536,197,623,211&quot; href=&quot;/pdf/hokkido_5.pdf&quot; target=&quot;_blank&quot; style=&quot;cursor: pointer&quot; alt=&quot;Venus4&quot; /&gt;
 &lt;/map&gt;
 
-&lt;script type=&quot;text/javascript&quot;&gt;  
-  
-        adjust();  
-  
-        var timeout = null;//onresize触发次数过多，设置定时器  
-        window.onresize = function () {  
-            clearTimeout(timeout);  
-            timeout = setTimeout(function () { window.location.reload(); }, 100);//页面大小变化，重新加载页面以刷新MAP  
-        }  
-  
-        //获取MAP中元素属性  
-        function adjust() {  
-            var map = document.getElementById(&quot;CribMap&quot;);  
-            var element = map.childNodes;  
-            var itemNumber = element.length / 2;  
-            for (var i = 0; i &lt; itemNumber - 1; i++) {  
-                var item = 2 * i + 1;  
-                var oldCoords = element[item].coords;  
-                var newcoords = adjustPosition(oldCoords);  
-                element[item].setAttribute(&quot;coords&quot;, newcoords);  
-            }  
-            var test = element;  
-        }  
-  
-        //调整MAP中坐标  
-        function adjustPosition(position) {  
-            var pageWidth = document.body.clientWidth;//获取页面宽度  
-            var pageHeith = document.body.clientHeight;//获取页面高度  
-  
-            var each = position.split(&quot;,&quot;);  
-            //获取每个坐标点  
-            for (var i = 0; i &lt; each.length; i++) {  
-                each[i] = Math.round(parseInt(each[i]) * pageWidth / imageWidth).toString();//x坐标  
-                i++;  
-                each[i] = Math.round(parseInt(each[i]) * pageHeith / imageHeigth).toString();//y坐标  
-            }  
-            //生成新的坐标点  
-            var newPosition = &quot;&quot;;  
-            for (var i = 0; i &lt; each.length; i++) {  
-                newPosition += each[i];  
-                if (i &lt; each.length - 1) {  
-                    newPosition += &quot;,&quot;;  
-                }  
-            }  
-            return newPosition;  
-        }  
+&lt;script src=&quot;http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js&quot;&gt;&lt;/script&gt;
+
+&lt;script src=&quot;jquery.rwdImageMaps.min.js&quot;&gt;&lt;/script&gt;
+
+&lt;script&gt;
+$(document).ready(function(e) {
+	$('img[usemap]').rwdImageMaps();
+	
+	$('area').on('click', function() {
+		alert($(this).attr('alt') + ' clicked');
+	});
+});
 &lt;/script&gt;
 
 </description>
