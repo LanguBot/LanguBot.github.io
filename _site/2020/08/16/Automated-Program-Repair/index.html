@@ -2,7 +2,6 @@
 <html lang="en">
 
 <head>
-    <script data-ad-client="ca-pub-8100602808235960" async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="google-site-verification" content="xBT4GhYoi5qRD5tr338pgPM5OWHHIDR6mNg1a3euekI" />
@@ -16,7 +15,10 @@
     
     <meta property="og:type" content="article">
     <meta property="og:description" content="
-  Over the past few years, Fifth-generation network(5G) and Artificial Intelligence(AI) technologies have made tremendous progress, achieving or surpassing human-level performance for different ta...">
+
+    
+    
+  Over the past few years, Fifth-generation network(5G) and Artificial Intelligence(AI) technologies have made tremendous progress, achieving or surpassing human-level performance for d...">
     
     <meta property="article:published_time" content="2020-08-16T00:00:00Z">
     
@@ -64,8 +66,15 @@
     <![endif]-->
 
     <!-- ga & ba script hoook -->
-    <script></script> 
+    <script data-ad-client="ca-pub-8100602808235960" async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
 </head>
+
+
+
+
+
+
+
 
 
 <!-- hack iOS CSS :active style -->
@@ -262,8 +271,19 @@
 
                 <!-- Multi-Lingual -->
                 
+                                    <!-- Language Selector -->
+                <select class="sel-lang" onchange= "onLanChange(this.options[this.options.selectedIndex].value)">
+                    <option value="0" selected> 中文 | Chinese </option>
+                    <option value="1"> 英文 | English </option>
+                </select>
 
-				<blockquote>
+
+                
+
+				<!-- English Version -->
+<div class="en post-container">
+    
+    <blockquote>
   <p>Over the past few years, Fifth-generation network(5G) and Artificial Intelligence(AI) technologies have made tremendous progress, achieving or surpassing human-level performance for different tasks such as vision and language processing. Thanks to these advances, we are witnessing a wide adoption of AI in safety-critical applications such as autonomous driving cars, crime prevention and detection, and medical treatment. However, despite their spectacular progress, AI systems, just like traditional software systems, often exhibit erroneous corner-cases behaviors due to the existence of latent defects or inefficiencies, and which can lead to catastrophic accidents.</p>
 </blockquote>
 
@@ -303,6 +323,56 @@ document.oncontextmenu = nocontextmenu; // for IE5+
 document.onmousedown = norightclick; // for all others
 -->
 </script>
+
+
+</div>
+
+<!-- Chinese Version -->
+<div class="zh post-container">
+    
+    <blockquote>
+  <p>摘要</p>
+</blockquote>
+
+<h2 id="软件自动化修复技术综述">软件自动化修复技术综述</h2>
+<h3 id="先前的修复技术">先前的修复技术</h3>
+<h3 id="提出的修复技术">提出的修复技术</h3>
+
+<p><em>未完待续…</em></p>
+
+<body onselectstart="return false"></body>
+
+<script language="JavaScript">
+<!--
+if (window.Event)
+document.captureEvents(Event.MOUSEUP);
+function nocontextmenu()
+{
+event.cancelBubble = true
+event.returnValue = false;
+return false;
+}
+function norightclick(e)
+{if (window.Event)
+{
+if (e.which == 2 || e.which == 3)
+return false;
+}
+else
+if (event.button == 2 || event.button == 3)
+{
+event.cancelBubble = true
+event.returnValue = false;
+return false;
+}
+}
+document.oncontextmenu = nocontextmenu; // for IE5+
+document.onmousedown = norightclick; // for all others
+-->
+</script>
+
+
+</div>
 
 
 
@@ -574,7 +644,7 @@ document.onmousedown = norightclick; // for all others
     function generateCatalog(selector) {
 
         // interop with multilangual 
-        if ('' == 'true') {
+        if ('true' == 'true') {
             _containerSelector = 'div.post-container.active'
         } else {
             _containerSelector = 'div.post-container'
@@ -631,6 +701,58 @@ document.onmousedown = norightclick; // for all others
 
 
 <!-- Multi-Lingual -->
+
+<!-- Handle Language Change -->
+<script type="text/javascript">
+    // get nodes
+    var $zh = document.querySelector(".zh");
+    var $en = document.querySelector(".en");
+    var $select = document.querySelector("select");
+
+    // Changes at v1.8.1: include lang flag as a url query. This interop well with catalog hash anchors.
+    function getLang() { return new URLSearchParams(document.location.search).get("lang") }
+
+    function setLang(newLang) {
+        var params = new URLSearchParams(document.location.search)
+        params.set("lang", newLang)
+        document.location.search = params.toString()  // refresh.
+    }
+
+    // handle render
+    function _render() {
+        var lang = getLang()
+        // en
+        if (lang == "en") {
+            $select.selectedIndex = 1;
+            $en.style.display = "block";
+            $en.classList.add("active");
+            $zh.style.display = "none";
+            $zh.classList.remove("active");
+            // default to zh-cn
+        } else {
+            $select.selectedIndex = 0;
+            $zh.style.display = "block";
+            $zh.classList.add("active");
+            $en.style.display = "none";
+            $en.classList.remove("active");
+        }
+        // interop with catalog 
+        generateCatalog(".catalog-body");
+    }
+
+    // handle select change
+    function onLanChange(index) {
+        if (index == 0) {
+            lang = "zh"
+        } else {
+            lang = "en"
+        }
+        setLang(lang)
+    }
+
+    // init
+    _render();
+</script>
 
 
 <!-- Simple Jekyll Search -->

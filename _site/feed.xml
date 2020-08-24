@@ -5,13 +5,16 @@
     <description>This is Langubot</description>
     <link>http://localhost:4000/</link>
     <atom:link href="http://localhost:4000/feed.xml" rel="self" type="application/rss+xml" />
-    <pubDate>Fri, 21 Aug 2020 10:40:09 +0900</pubDate>
-    <lastBuildDate>Fri, 21 Aug 2020 10:40:09 +0900</lastBuildDate>
+    <pubDate>Mon, 24 Aug 2020 16:28:54 +0900</pubDate>
+    <lastBuildDate>Mon, 24 Aug 2020 16:28:54 +0900</lastBuildDate>
     <generator>Jekyll v4.1.1</generator>
     
       <item>
         <title>Automated Program Repair</title>
-        <description>&lt;blockquote&gt;
+        <description>&lt;!-- English Version --&gt;
+&lt;div class=&quot;en post-container&quot;&gt;
+    
+    &lt;blockquote&gt;
   &lt;p&gt;Over the past few years, Fifth-generation network(5G) and Artificial Intelligence(AI) technologies have made tremendous progress, achieving or surpassing human-level performance for different tasks such as vision and language processing. Thanks to these advances, we are witnessing a wide adoption of AI in safety-critical applications such as autonomous driving cars, crime prevention and detection, and medical treatment. However, despite their spectacular progress, AI systems, just like traditional software systems, often exhibit erroneous corner-cases behaviors due to the existence of latent defects or inefficiencies, and which can lead to catastrophic accidents.&lt;/p&gt;
 &lt;/blockquote&gt;
 
@@ -51,6 +54,56 @@ document.oncontextmenu = nocontextmenu; // for IE5+
 document.onmousedown = norightclick; // for all others
 --&gt;
 &lt;/script&gt;
+
+
+&lt;/div&gt;
+
+&lt;!-- Chinese Version --&gt;
+&lt;div class=&quot;zh post-container&quot;&gt;
+    
+    &lt;blockquote&gt;
+  &lt;p&gt;摘要&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;h2 id=&quot;软件自动化修复技术综述&quot;&gt;软件自动化修复技术综述&lt;/h2&gt;
+&lt;h3 id=&quot;先前的修复技术&quot;&gt;先前的修复技术&lt;/h3&gt;
+&lt;h3 id=&quot;提出的修复技术&quot;&gt;提出的修复技术&lt;/h3&gt;
+
+&lt;p&gt;&lt;em&gt;未完待续…&lt;/em&gt;&lt;/p&gt;
+
+&lt;body onselectstart=&quot;return false&quot;&gt;&lt;/body&gt;
+
+&lt;script language=&quot;JavaScript&quot;&gt;
+&lt;!--
+if (window.Event)
+document.captureEvents(Event.MOUSEUP);
+function nocontextmenu()
+{
+event.cancelBubble = true
+event.returnValue = false;
+return false;
+}
+function norightclick(e)
+{if (window.Event)
+{
+if (e.which == 2 || e.which == 3)
+return false;
+}
+else
+if (event.button == 2 || event.button == 3)
+{
+event.cancelBubble = true
+event.returnValue = false;
+return false;
+}
+}
+document.oncontextmenu = nocontextmenu; // for IE5+
+document.onmousedown = norightclick; // for all others
+--&gt;
+&lt;/script&gt;
+
+
+&lt;/div&gt;
 
 </description>
         <pubDate>Sun, 16 Aug 2020 00:00:00 +0900</pubDate>
