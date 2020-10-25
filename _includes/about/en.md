@@ -3,16 +3,6 @@
 
 
 
-![](../../../img/zemingd.jpg) 
-Mr.Deeplus  *Kyushu University*
-
-Guarantee the security of AI systems in safety-critical applications such as autonomous driving cars and medical treatment. 🇸🇪 🇯🇵
-
-
-
-
-> Contact: dongzm_0405[at]yahoo.co.jp
-
 
 
 
