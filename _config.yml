@@ -1,7 +1,7 @@
 # Site settings
 title: LanguBot
 SEOTitle: LanguBot | Deep learning
-header-img: img/home-bg.jpg
+header-img: img/home-bg-art.jpg
 email: 
 description: "This is Langubot"
 keyword: "Web, Design and Learning"
@@ -17,8 +17,8 @@ weibo_username:
 zhihu_username:    
 github_username:    
 twitter_username: 
-instagram_username: nevermissyousjl  
-facebook_username:  profile.php?id=100041706951215
+instagram_username: 
+facebook_username:  
 #linkedin_username:  firstname-lastname-idxxxx
 
 
@@ -80,7 +80,7 @@ ga_domain: www.langubot.com
 # Sidebar settings
 sidebar: true                           # whether or not using Sidebar.
 sidebar-about-description: "Create & Share <br> "
-sidebar-avatar: /img/kyushu.jpg      # use absolute URL, seeing it's used in both `/` and `/about/`
+sidebar-avatar: /img/LanguBot.png      # use absolute URL, seeing it's used in both `/` and `/about/`
 
 
 
