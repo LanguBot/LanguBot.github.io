@@ -1,6 +1,14 @@
 [
   
     {
+      "title"    : "Analyze Zachary‘s karate club with Pytorch geometric",
+      "subtitle" : "Graph Convolutional Networks",
+      "tags"     : "Original, Pytorch geomtric, GNN",
+      "url"      : "/2020/11/24/Zachary/",
+      "date"     : "2020-11-24 00:00:00 +0900"
+    } ,
+  
+    {
       "title"    : "我的第一胎孕育在長崎",
       "subtitle" : "初设计",
       "tags"     : "Design, Architecture, Original",

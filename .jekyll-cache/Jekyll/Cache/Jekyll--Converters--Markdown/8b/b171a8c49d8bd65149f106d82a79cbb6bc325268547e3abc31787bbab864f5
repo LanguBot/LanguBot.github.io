@@ -1,0 +1,257 @@
+I"�<blockquote>
+  <p>Zachary’s karate club is a social network of a university karate club, described in the paper “An Information Flow Model for Conflict and Fission in Small Groups” by Wayne W. Zachary. The network became a popular example of community structure in networks after its use by Michelle Girvan and Mark Newman in 2002.</p>
+</blockquote>
+
+<h3 id="network-description">Network description</h3>
+<p>A social network of a karate club was studied by Wayne W. Zachary for a period of three years from 1970 to 1972. The network captures 34 members of a karate club, documenting links between pairs of members who interacted outside the club. During the study a conflict arose between the administrator “John A” and instructor “Mr. Hi” (pseudonyms), which led to the split of the club into two. Half of the members formed a new club around Mr. Hi; members from the other part found a new instructor or gave up karate. Based on collected data Zachary correctly assigned all but one member of the club to the groups they actually joined after the split.</p>
+
+<h3 id="code-description">Code description</h3>
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+</pre></td><td class="rouge-code"><pre>import torch
+from torch_geometric.datasets import <span class="k">*</span>
+import torch.nn.functional as F
+from torch_geometric.nn import GCNConv
+
+dataset <span class="o">=</span> KarateClub<span class="o">()</span>
+
+print<span class="o">(</span>dataset[0]<span class="o">)</span>
+
+
+class Net<span class="o">(</span>torch.nn.Module<span class="o">)</span>:
+    def __init__<span class="o">(</span>self<span class="o">)</span>:
+        super<span class="o">()</span>.__init__<span class="o">()</span>
+        self.conv1 <span class="o">=</span> GCNConv<span class="o">(</span>dataset.num_node_features, 16<span class="o">)</span>
+        self.conv2 <span class="o">=</span> GCNConv<span class="o">(</span>16, dataset.num_classes<span class="o">)</span>
+        pass
+
+    def forward<span class="o">(</span>self, data<span class="o">)</span>:
+        x, edge_index <span class="o">=</span> data.x, data.edge_index
+
+        x <span class="o">=</span> self.conv1<span class="o">(</span>x, edge_index<span class="o">)</span>
+        x <span class="o">=</span> F.relu<span class="o">(</span>x<span class="o">)</span>
+        x <span class="o">=</span> F.dropout<span class="o">(</span>x, <span class="nv">training</span><span class="o">=</span>self.training<span class="o">)</span>
+        x <span class="o">=</span> self.conv2<span class="o">(</span>x, edge_index<span class="o">)</span>
+
+        <span class="k">return </span>F.log_softmax<span class="o">(</span>x, <span class="nv">dim</span><span class="o">=</span>1<span class="o">)</span>
+    pass
+pass
+
+device <span class="o">=</span> torch.device<span class="o">(</span><span class="s1">'cuda'</span> <span class="k">if </span>torch.cuda.is_available<span class="o">()</span> <span class="k">else</span> <span class="s1">'cpu'</span><span class="o">)</span>
+model <span class="o">=</span> Net<span class="o">()</span>.to<span class="o">(</span>device<span class="o">)</span>
+data <span class="o">=</span> dataset[0].to<span class="o">(</span>device<span class="o">)</span>
+optimizer <span class="o">=</span> torch.optim.Adam<span class="o">(</span>model.parameters<span class="o">()</span>, <span class="nv">lr</span><span class="o">=</span>0.01<span class="o">)</span>
+
+
+model.train<span class="o">()</span>
+<span class="k">for </span>epoch <span class="k">in </span>range<span class="o">(</span>50<span class="o">)</span>:
+    optimizer.zero_grad<span class="o">()</span>
+    out <span class="o">=</span> model<span class="o">(</span>data<span class="o">)</span>
+    loss <span class="o">=</span> F.nll_loss<span class="o">(</span>out, data.y<span class="o">)</span>
+    loss.backward<span class="o">()</span>
+    optimizer.step<span class="o">()</span>
+
+    print<span class="o">(</span><span class="s1">'Epoch {} | Loss: {:.4f}'</span>.format<span class="o">(</span>epoch,loss.item<span class="o">()))</span>
+
+    pass
+pass
+
+model.eval<span class="o">()</span>
+_, pred <span class="o">=</span> model<span class="o">(</span>data<span class="o">)</span>.max<span class="o">(</span><span class="nv">dim</span><span class="o">=</span>1<span class="o">)</span>
+correct <span class="o">=</span> int<span class="o">(</span>pred.eq<span class="o">(</span>data.y<span class="o">)</span>.sum<span class="o">()</span>.item<span class="o">())</span>
+acc <span class="o">=</span> correct / int<span class="o">(</span>data.x.sum<span class="o">())</span>
+print<span class="o">(</span><span class="s1">'Accuracy:{:.4f}'</span>.format<span class="o">(</span>acc<span class="o">))</span>
+
+</pre></td></tr></tbody></table></code></pre></div></div>
+
+<h3 id="result-description">Result description</h3>
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+</pre></td><td class="rouge-code"><pre>Data<span class="o">(</span><span class="nv">edge_index</span><span class="o">=[</span>2, 156], <span class="nv">x</span><span class="o">=[</span>34, 34], <span class="nv">y</span><span class="o">=[</span>34]<span class="o">)</span>
+Epoch 0 | Loss: 0.6895
+Epoch 1 | Loss: 0.6858
+Epoch 2 | Loss: 0.6677
+Epoch 3 | Loss: 0.6405
+Epoch 4 | Loss: 0.6379
+Epoch 5 | Loss: 0.6077
+Epoch 6 | Loss: 0.6132
+Epoch 7 | Loss: 0.5913
+Epoch 8 | Loss: 0.5633
+Epoch 9 | Loss: 0.5850
+Epoch 10 | Loss: 0.5570
+Epoch 11 | Loss: 0.5237
+Epoch 12 | Loss: 0.4963
+Epoch 13 | Loss: 0.5560
+Epoch 14 | Loss: 0.4344
+Epoch 15 | Loss: 0.4255
+Epoch 16 | Loss: 0.4120
+Epoch 17 | Loss: 0.4020
+Epoch 18 | Loss: 0.4036
+Epoch 19 | Loss: 0.3419
+Epoch 20 | Loss: 0.3367
+Epoch 21 | Loss: 0.3493
+Epoch 22 | Loss: 0.2851
+Epoch 23 | Loss: 0.2857
+Epoch 24 | Loss: 0.2965
+Epoch 25 | Loss: 0.2597
+Epoch 26 | Loss: 0.2113
+Epoch 27 | Loss: 0.2691
+Epoch 28 | Loss: 0.2078
+Epoch 29 | Loss: 0.1864
+Epoch 30 | Loss: 0.1789
+Epoch 31 | Loss: 0.1322
+Epoch 32 | Loss: 0.2001
+Epoch 33 | Loss: 0.1718
+Epoch 34 | Loss: 0.1512
+Epoch 35 | Loss: 0.1301
+Epoch 36 | Loss: 0.1448
+Epoch 37 | Loss: 0.1000
+Epoch 38 | Loss: 0.1432
+Epoch 39 | Loss: 0.1214
+Epoch 40 | Loss: 0.0902
+Epoch 41 | Loss: 0.0986
+Epoch 42 | Loss: 0.0987
+Epoch 43 | Loss: 0.1163
+Epoch 44 | Loss: 0.1156
+Epoch 45 | Loss: 0.0936
+Epoch 46 | Loss: 0.1082
+Epoch 47 | Loss: 0.0684
+Epoch 48 | Loss: 0.1254
+Epoch 49 | Loss: 0.1213
+Accuracy:0.9706
+</pre></td></tr></tbody></table></code></pre></div></div>
+
+<body onselectstart="return false"></body>
+
+<script language="JavaScript">
+<!--
+if (window.Event)
+document.captureEvents(Event.MOUSEUP);
+function nocontextmenu()
+{
+event.cancelBubble = true
+event.returnValue = false;
+return false;
+}
+function norightclick(e)
+{if (window.Event)
+{
+if (e.which == 2 || e.which == 3)
+return false;
+}
+else
+if (event.button == 2 || event.button == 3)
+{
+event.cancelBubble = true
+event.returnValue = false;
+return false;
+}
+}
+document.oncontextmenu = nocontextmenu; // for IE5+
+document.onmousedown = norightclick; // for all others
+-->
+</script>
+
+:ET

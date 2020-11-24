@@ -5,9 +5,281 @@
     <description>This is Langubot</description>
     <link>http://localhost:4000/</link>
     <atom:link href="http://localhost:4000/feed.xml" rel="self" type="application/rss+xml" />
-    <pubDate>Tue, 24 Nov 2020 11:40:25 +0900</pubDate>
-    <lastBuildDate>Tue, 24 Nov 2020 11:40:25 +0900</lastBuildDate>
+    <pubDate>Tue, 24 Nov 2020 17:31:59 +0900</pubDate>
+    <lastBuildDate>Tue, 24 Nov 2020 17:31:59 +0900</lastBuildDate>
     <generator>Jekyll v4.1.1</generator>
+    
+      <item>
+        <title>Analyze Zachary‘s karate club with Pytorch geometric</title>
+        <description>&lt;blockquote&gt;
+  &lt;p&gt;Zachary’s karate club is a social network of a university karate club, described in the paper “An Information Flow Model for Conflict and Fission in Small Groups” by Wayne W. Zachary. The network became a popular example of community structure in networks after its use by Michelle Girvan and Mark Newman in 2002.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;h3 id=&quot;network-description&quot;&gt;Network description&lt;/h3&gt;
+&lt;p&gt;A social network of a karate club was studied by Wayne W. Zachary for a period of three years from 1970 to 1972. The network captures 34 members of a karate club, documenting links between pairs of members who interacted outside the club. During the study a conflict arose between the administrator “John A” and instructor “Mr. Hi” (pseudonyms), which led to the split of the club into two. Half of the members formed a new club around Mr. Hi; members from the other part found a new instructor or gave up karate. Based on collected data Zachary correctly assigned all but one member of the club to the groups they actually joined after the split.&lt;/p&gt;
+
+&lt;h3 id=&quot;code-description&quot;&gt;Code description&lt;/h3&gt;
+&lt;div class=&quot;language-shell highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;table class=&quot;rouge-table&quot;&gt;&lt;tbody&gt;&lt;tr&gt;&lt;td class=&quot;rouge-gutter gl&quot;&gt;&lt;pre class=&quot;lineno&quot;&gt;1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;rouge-code&quot;&gt;&lt;pre&gt;import torch
+from torch_geometric.datasets import &lt;span class=&quot;k&quot;&gt;*&lt;/span&gt;
+import torch.nn.functional as F
+from torch_geometric.nn import GCNConv
+
+dataset &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; KarateClub&lt;span class=&quot;o&quot;&gt;()&lt;/span&gt;
+
+print&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;dataset[0]&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;
+
+
+class Net&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;torch.nn.Module&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;:
+    def __init__&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;self&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;:
+        super&lt;span class=&quot;o&quot;&gt;()&lt;/span&gt;.__init__&lt;span class=&quot;o&quot;&gt;()&lt;/span&gt;
+        self.conv1 &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; GCNConv&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;dataset.num_node_features, 16&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;
+        self.conv2 &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; GCNConv&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;16, dataset.num_classes&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;
+        pass
+
+    def forward&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;self, data&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;:
+        x, edge_index &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; data.x, data.edge_index
+
+        x &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; self.conv1&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;x, edge_index&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;
+        x &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; F.relu&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;x&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;
+        x &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; F.dropout&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;x, &lt;span class=&quot;nv&quot;&gt;training&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;self.training&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;
+        x &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; self.conv2&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;x, edge_index&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;
+
+        &lt;span class=&quot;k&quot;&gt;return &lt;/span&gt;F.log_softmax&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;x, &lt;span class=&quot;nv&quot;&gt;dim&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;1&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;
+    pass
+pass
+
+device &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; torch.device&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;'cuda'&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;if &lt;/span&gt;torch.cuda.is_available&lt;span class=&quot;o&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;else&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;'cpu'&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;
+model &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; Net&lt;span class=&quot;o&quot;&gt;()&lt;/span&gt;.to&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;device&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;
+data &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; dataset[0].to&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;device&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;
+optimizer &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; torch.optim.Adam&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;model.parameters&lt;span class=&quot;o&quot;&gt;()&lt;/span&gt;, &lt;span class=&quot;nv&quot;&gt;lr&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;0.01&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;
+
+
+model.train&lt;span class=&quot;o&quot;&gt;()&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;for &lt;/span&gt;epoch &lt;span class=&quot;k&quot;&gt;in &lt;/span&gt;range&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;50&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;:
+    optimizer.zero_grad&lt;span class=&quot;o&quot;&gt;()&lt;/span&gt;
+    out &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; model&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;data&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;
+    loss &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; F.nll_loss&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;out, data.y&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;
+    loss.backward&lt;span class=&quot;o&quot;&gt;()&lt;/span&gt;
+    optimizer.step&lt;span class=&quot;o&quot;&gt;()&lt;/span&gt;
+
+    print&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;'Epoch {} | Loss: {:.4f}'&lt;/span&gt;.format&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;epoch,loss.item&lt;span class=&quot;o&quot;&gt;()))&lt;/span&gt;
+
+    pass
+pass
+
+model.eval&lt;span class=&quot;o&quot;&gt;()&lt;/span&gt;
+_, pred &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; model&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;data&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;.max&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;dim&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;1&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;
+correct &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; int&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;pred.eq&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;data.y&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;.sum&lt;span class=&quot;o&quot;&gt;()&lt;/span&gt;.item&lt;span class=&quot;o&quot;&gt;())&lt;/span&gt;
+acc &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; correct / int&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;data.x.sum&lt;span class=&quot;o&quot;&gt;())&lt;/span&gt;
+print&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;'Accuracy:{:.4f}'&lt;/span&gt;.format&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;acc&lt;span class=&quot;o&quot;&gt;))&lt;/span&gt;
+
+&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h3 id=&quot;result-description&quot;&gt;Result description&lt;/h3&gt;
+&lt;div class=&quot;language-shell highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;table class=&quot;rouge-table&quot;&gt;&lt;tbody&gt;&lt;tr&gt;&lt;td class=&quot;rouge-gutter gl&quot;&gt;&lt;pre class=&quot;lineno&quot;&gt;1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;rouge-code&quot;&gt;&lt;pre&gt;Data&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;edge_index&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=[&lt;/span&gt;2, 156], &lt;span class=&quot;nv&quot;&gt;x&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=[&lt;/span&gt;34, 34], &lt;span class=&quot;nv&quot;&gt;y&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=[&lt;/span&gt;34]&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;
+Epoch 0 | Loss: 0.6895
+Epoch 1 | Loss: 0.6858
+Epoch 2 | Loss: 0.6677
+Epoch 3 | Loss: 0.6405
+Epoch 4 | Loss: 0.6379
+Epoch 5 | Loss: 0.6077
+Epoch 6 | Loss: 0.6132
+Epoch 7 | Loss: 0.5913
+Epoch 8 | Loss: 0.5633
+Epoch 9 | Loss: 0.5850
+Epoch 10 | Loss: 0.5570
+Epoch 11 | Loss: 0.5237
+Epoch 12 | Loss: 0.4963
+Epoch 13 | Loss: 0.5560
+Epoch 14 | Loss: 0.4344
+Epoch 15 | Loss: 0.4255
+Epoch 16 | Loss: 0.4120
+Epoch 17 | Loss: 0.4020
+Epoch 18 | Loss: 0.4036
+Epoch 19 | Loss: 0.3419
+Epoch 20 | Loss: 0.3367
+Epoch 21 | Loss: 0.3493
+Epoch 22 | Loss: 0.2851
+Epoch 23 | Loss: 0.2857
+Epoch 24 | Loss: 0.2965
+Epoch 25 | Loss: 0.2597
+Epoch 26 | Loss: 0.2113
+Epoch 27 | Loss: 0.2691
+Epoch 28 | Loss: 0.2078
+Epoch 29 | Loss: 0.1864
+Epoch 30 | Loss: 0.1789
+Epoch 31 | Loss: 0.1322
+Epoch 32 | Loss: 0.2001
+Epoch 33 | Loss: 0.1718
+Epoch 34 | Loss: 0.1512
+Epoch 35 | Loss: 0.1301
+Epoch 36 | Loss: 0.1448
+Epoch 37 | Loss: 0.1000
+Epoch 38 | Loss: 0.1432
+Epoch 39 | Loss: 0.1214
+Epoch 40 | Loss: 0.0902
+Epoch 41 | Loss: 0.0986
+Epoch 42 | Loss: 0.0987
+Epoch 43 | Loss: 0.1163
+Epoch 44 | Loss: 0.1156
+Epoch 45 | Loss: 0.0936
+Epoch 46 | Loss: 0.1082
+Epoch 47 | Loss: 0.0684
+Epoch 48 | Loss: 0.1254
+Epoch 49 | Loss: 0.1213
+Accuracy:0.9706
+&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;body onselectstart=&quot;return false&quot;&gt;&lt;/body&gt;
+
+&lt;script language=&quot;JavaScript&quot;&gt;
+&lt;!--
+if (window.Event)
+document.captureEvents(Event.MOUSEUP);
+function nocontextmenu()
+{
+event.cancelBubble = true
+event.returnValue = false;
+return false;
+}
+function norightclick(e)
+{if (window.Event)
+{
+if (e.which == 2 || e.which == 3)
+return false;
+}
+else
+if (event.button == 2 || event.button == 3)
+{
+event.cancelBubble = true
+event.returnValue = false;
+return false;
+}
+}
+document.oncontextmenu = nocontextmenu; // for IE5+
+document.onmousedown = norightclick; // for all others
+--&gt;
+&lt;/script&gt;
+
+</description>
+        <pubDate>Tue, 24 Nov 2020 00:00:00 +0900</pubDate>
+        <link>http://localhost:4000/2020/11/24/Zachary/</link>
+        <guid isPermaLink="true">http://localhost:4000/2020/11/24/Zachary/</guid>
+        
+        <category>Original</category>
+        
+        <category>Pytorch geomtric</category>
+        
+        <category>GNN</category>
+        
+        
+      </item>
     
       <item>
         <title>我的第一胎孕育在長崎</title>
