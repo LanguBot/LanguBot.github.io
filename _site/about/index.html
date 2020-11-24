@@ -244,52 +244,55 @@
 
 
 
-<!-- Chinese Version -->
-<div class="zh post-container">
-    
-    <blockquote>
-  <p>享受生活，探索可能。</p>
-</blockquote>
-
-<body onselectstart="return false"></body>
-
-<script language="JavaScript">
-<!--
-if (window.Event)
-document.captureEvents(Event.MOUSEUP);
-function nocontextmenu()
-{
-event.cancelBubble = true
-event.returnValue = false;
-return false;
-}
-function norightclick(e)
-{if (window.Event)
-{
-if (e.which == 2 || e.which == 3)
-return false;
-}
-else
-if (event.button == 2 || event.button == 3)
-{
-event.cancelBubble = true
-event.returnValue = false;
-return false;
-}
-}
-document.oncontextmenu = nocontextmenu; // for IE5+
-document.onmousedown = norightclick; // for all others
--->
-</script>
-
-
-</div>
 
 <!-- English Version -->
 <div class="en post-container">
     
     <blockquote>
-  <p>Your time is limited, so don’t waste it living someone else’s life.</p>
+  <p>“Psychologists tell us that in order to learn from experience, two ingredients are necessary: frequent practice and immediate feedback.” <br /> ― Richard H Thaler, Misbehaving: The Making of Behavioural Economics</p>
+</blockquote>
+
+<p>Applying Behavioral Economics in Predictive Analytics for Finance.</p>
+
+<body onselectstart="return false"></body>
+
+<script language="JavaScript">
+<!--
+if (window.Event)
+document.captureEvents(Event.MOUSEUP);
+function nocontextmenu()
+{
+event.cancelBubble = true
+event.returnValue = false;
+return false;
+}
+function norightclick(e)
+{if (window.Event)
+{
+if (e.which == 2 || e.which == 3)
+return false;
+}
+else
+if (event.button == 2 || event.button == 3)
+{
+event.cancelBubble = true
+event.returnValue = false;
+return false;
+}
+}
+document.oncontextmenu = nocontextmenu; // for IE5+
+document.onmousedown = norightclick; // for all others
+-->
+</script>
+
+
+</div>
+
+<!-- Chinese Version -->
+<div class="zh post-container">
+    
+    <blockquote>
+  <p>“ 投资是需要你以自己独特的方式去学习的一件事情。” <br /> ― 《大空头 The Big Short》（2015）</p>
 </blockquote>
 
 <body onselectstart="return false"></body>
@@ -325,6 +328,8 @@ document.onmousedown = norightclick; // for all others
 
 
 </div>
+
+
 
 
 
@@ -401,7 +406,7 @@ document.onmousedown = norightclick; // for all others
     <img src="/img/LanguBot.png" />
     
     
-    <p>Create & Share <br> </p>
+    <p>Discover, Connect & Create</p>
     
     <!-- SNS Link -->
     
@@ -439,6 +444,27 @@ document.onmousedown = norightclick; // for all others
 	</div>
 </div>
 
+
+<!-- Add support for Mathjax by Voleking-->
+<!-- If you want to see formulars well in post preview, Maybe you should add this.-->
+<!-- However, most of the time formulars may not appear in the post preview, you can delete it.-->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    TeX: {
+      equationNumbers: {
+        autoNumber: "AMS"
+      }
+    },
+    tex2jax: {
+      inlineMath: [ ['$','$'] ],
+      displayMath: [ ['$$','$$'] ],
+      processEscapes: true,
+    }
+  });
+</script>
+<script type="text/javascript"
+        src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
 
 
     <!-- Footer -->

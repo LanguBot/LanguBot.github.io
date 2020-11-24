@@ -31,7 +31,7 @@ paginate: 10
 exclude: ["less","node_modules","Gruntfile.js","package.json","README.md","README.zh.md"]
 anchorjs: true                          # if you want to customize anchor. check out line:181 of `post.html`
 # If you have timezone issue (e.g. #68) in China, uncomment to use this:
-#timezone: CN  
+# timezone: JP 
 
 
 
@@ -79,7 +79,7 @@ ga_domain: www.langubot.com
 
 # Sidebar settings
 sidebar: true                           # whether or not using Sidebar.
-sidebar-about-description: "Create & Share <br> "
+sidebar-about-description: "Discover, Connect & Create"
 sidebar-avatar: /img/LanguBot.png      # use absolute URL, seeing it's used in both `/` and `/about/`
 
 
@@ -97,7 +97,7 @@ service-worker: true
 
 
 # MathJax rendering for layout:page (e.g. post preview)
-page-mathjax: false
+page-mathjax: true
 
 
 
